@@ -65,12 +65,17 @@ uv run python 04_chains.py
 - 模型对比：OpenAI vs 通义千问
 
 ### 第4课：链 (`04_chains.py`)
-- LCEL 基础：管道操作符 `|` 组合组件
-- 核心组件：RunnableLambda / RunnablePassthrough / RunnableParallel / RunnableBranch
-- @chain 装饰器：优雅定义自定义链
-- 调用方式：invoke / stream / batch + 异步版本
-- 错误处理：with_retry / with_fallbacks
-- 配置调试：bind / with_config / input_schema
+- LCEL 基础：管道操作符 `|`、pipe() 方法、RunnableSequence
+- 核心组件：
+  - `RunnableLambda`：把普通函数包装成 Runnable
+  - `RunnablePassthrough`：数据透传，assign() 追加字段（常用于 RAG）
+  - `RunnableParallel`：并行执行多个链
+  - `RunnableBranch`：条件路由分支
+  - `@chain` 装饰器：用函数方式定义复杂链
+- 调用方式：invoke / stream / batch + 异步版本（ainvoke / astream / abatch）
+- 错误处理：with_retry（自动重试）/ with_fallbacks（降级备选）
+- 配置调试：bind（绑定参数）/ with_config（tags/metadata）/ input_schema
+- 工具函数：`itemgetter` 从字典提取字段
 
 ### 第5-8课
 待完成...
