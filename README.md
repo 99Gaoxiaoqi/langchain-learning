@@ -25,6 +25,7 @@ OPENAI_API_KEY=sk-xxx         # OpenAI
 uv run python 01_basic_chat.py
 uv run python 02_prompt_templates.py
 uv run python 03_output_parsers.py
+uv run python 04_chains.py
 ```
 
 ## 项目结构
@@ -63,7 +64,15 @@ uv run python 03_output_parsers.py
 - OutputFixingParser 自动修复
 - 模型对比：OpenAI vs 通义千问
 
-### 第4-8课
+### 第4课：链 (`04_chains.py`)
+- LCEL 基础：管道操作符 `|` 组合组件
+- 核心组件：RunnableLambda / RunnablePassthrough / RunnableParallel / RunnableBranch
+- @chain 装饰器：优雅定义自定义链
+- 调用方式：invoke / stream / batch + 异步版本
+- 错误处理：with_retry / with_fallbacks
+- 配置调试：bind / with_config / input_schema
+
+### 第5-8课
 待完成...
 
 ## 企业级组件
