@@ -77,7 +77,22 @@ uv run python 04_chains.py
 - 配置调试：bind（绑定参数）/ with_config（tags/metadata）/ input_schema
 - 工具函数：`itemgetter` 从字典提取字段
 
-### 第5-8课
+### 第5课：对话记忆 (`05_memory.py`)
+- 两种记忆管理方式：
+  - 传统方式：`ConversationChain` + Memory 类（简单但不支持流式）
+  - LCEL 方式：`RunnableWithMessageHistory`（推荐，支持流式/异步）
+- 传统 Memory 类（langchain_classic）：
+  - `ConversationBufferMemory`：完整历史
+  - `ConversationBufferWindowMemory`：最近 K 轮
+  - `ConversationSummaryMemory`：LLM 生成摘要
+  - `ConversationTokenBufferMemory`：按 token 限制
+- LCEL 方式核心组件：
+  - `InMemoryChatMessageHistory`：内存存储历史
+  - `RunnableWithMessageHistory`：自动管理历史读写
+  - `trim_messages`：消息裁剪工具
+- 注意：传统 Memory 类不能直接和 LCEL 结合使用
+
+### 第6-8课
 待完成...
 
 ## 企业级组件
