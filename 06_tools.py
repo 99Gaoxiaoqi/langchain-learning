@@ -15,7 +15,6 @@ from datetime import datetime
 import math
 
 load_dotenv()
-
 # 定义工具
 @tool
 def get_current_time() -> str:

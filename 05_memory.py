@@ -24,6 +24,20 @@
 └─────────────────────────────────────────────────────────────────────────────┘
 
 注意：传统 Memory 类不能直接和 LCEL 的 RunnableWithMessageHistory 结合使用！
+
+关于 langchain_classic 包：
+─────────────────────────────────────────────────────────────────────────────
+langchain_classic 是 LangChain 官方提供的向后兼容包，包含被标记为 legacy 的组件。
+这些组件（如 ConversationChain、各种 Memory 类）在新版 LangChain 中已被 LCEL 方式取代，
+但为了兼容旧代码和快速原型开发，官方将它们迁移到了 langchain_classic 包中。
+
+使用场景：
+- 快速原型开发：开箱即用的 Memory 类型丰富
+- 迁移旧项目：保持与旧代码兼容
+- 学习理解：概念更直观易懂
+
+生产环境建议：使用 LCEL 方式（RunnableWithMessageHistory），更灵活、支持流式/异步
+─────────────────────────────────────────────────────────────────────────────
 """
 
 from dotenv import load_dotenv
@@ -34,6 +48,8 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.messages import HumanMessage, AIMessage, trim_messages
 
 # 传统方式需要的类
+# langchain_classic 是官方向后兼容包，包含 legacy 组件
+# 这些类在新版 LangChain 中已被 LCEL 方式取代，但仍可用于快速原型开发
 from langchain_classic.memory import (
     ConversationBufferMemory,
     ConversationBufferWindowMemory,
