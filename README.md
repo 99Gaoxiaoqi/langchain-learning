@@ -29,6 +29,7 @@ uv run python 04_chains.py
 uv run python 05_memory.py
 uv run python 06_tools.py
 uv run python 07_rag_basics.py
+uv run python 08_agents.py
 ```
 
 ## 项目结构
@@ -144,8 +145,29 @@ uv run python 07_rag_basics.py
   - 带历史的 RAG：支持多轮对话
   - 流式输出 RAG
 
-### 第8课：Agents
-待完成...
+### 第8课：Agent 智能体 (`08_agents.py`)
+- Agent 核心概念：
+  - Agent = LLM + 工具 + 循环
+  - ReAct 模式：思考(Thought) → 行动(Action) → 观察(Observation)
+  - 与 Chain 的区别：动态决策 vs 固定流程
+- 三种实现方式：
+  - 手动工具循环：完全控制，适合学习理解
+  - `create_tool_calling_agent`：官方封装，快速上手
+  - LangGraph：生产推荐，功能最强大
+- LangGraph Agent（重点）：
+  - `StateGraph`：定义状态和图结构
+  - `add_node` / `add_edge`：添加节点和边
+  - `add_conditional_edges`：条件路由
+  - `ToolNode`：预置的工具执行节点
+  - `MemorySaver`：内存检查点（记忆）
+  - 流式输出：`stream()` 方法
+- 高级模式：
+  - ReAct Agent：思考-行动-观察循环
+  - 多步骤任务 Agent：任务分解和执行
+- 最佳实践：
+  - 工具设计原则（清晰描述、单一职责、错误处理）
+  - Agent 提示词设计
+  - 生产环境注意事项（最大迭代、超时、日志、人工确认）
 
 ## 企业级组件
 
