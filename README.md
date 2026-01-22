@@ -28,12 +28,14 @@ uv run python 03_output_parsers.py
 uv run python 04_chains.py
 uv run python 05_memory.py
 uv run python 06_tools.py
+uv run python 07_rag_basics.py
 ```
 
 ## 项目结构
 
 ```
 ├── llm_factory.py          # 统一 LLM 工厂（多模型兼容层）
+├── embedding_factory.py    # 统一 Embedding 工厂（多模型兼容层）
 ├── prompt_manager.py       # 企业级提示词管理器
 ├── 01_basic_chat.py        # 第1课：基础对话
 ├── 02_prompt_templates.py  # 第2课：Prompt 模板
@@ -110,7 +112,39 @@ uv run python 06_tools.py
   - 异步工具（async def）
   - 访问运行时配置（RunnableConfig）
 
-### 第7-8课
+### 第7课：RAG 基础 (`07_rag_basics.py`)
+- RAG 完整流程：
+  - 索引阶段：文档加载 → 文本分割 → 向量嵌入 → 存入向量库
+  - 检索阶段：用户问题 → 向量检索 → 构建 Prompt → LLM 生成
+- 文档加载器（Document Loaders）：
+  - `TextLoader`：纯文本文件
+  - `WebBaseLoader`：网页内容
+  - `DirectoryLoader`：整个目录
+  - `PyPDFLoader` / `CSVLoader` / `JSONLoader` 等
+- 文本分割器（Text Splitters）：
+  - `RecursiveCharacterTextSplitter`：推荐，递归分割保持语义完整
+  - `CharacterTextSplitter`：简单字符分割
+  - 关键参数：chunk_size / chunk_overlap / separators
+- 向量嵌入（Embeddings）：
+  - DashScope（阿里云）/ OpenAI / HuggingFace
+  - `embed_query()` / `embed_documents()`
+- 向量存储（Vector Stores）：
+  - `Chroma`：轻量级，适合开发（推荐）
+  - `FAISS`：高性能，适合大规模
+  - `Pinecone` / `Milvus`：云服务/企业级
+- 检索器（Retrievers）：
+  - `VectorStoreRetriever`：基础向量检索
+  - `MultiQueryRetriever`：多查询提高召回率
+  - `ContextualCompressionRetriever`：压缩提取相关部分
+  - `SelfQueryRetriever`：自动提取过滤条件
+  - MMR 检索：增加结果多样性
+- RAG 链构建方式：
+  - 手动 LCEL 链：完全控制，适合学习
+  - `create_retrieval_chain`：官方推荐
+  - 带历史的 RAG：支持多轮对话
+  - 流式输出 RAG
+
+### 第8课：Agents
 待完成...
 
 ## 企业级组件
@@ -123,6 +157,16 @@ from llm_factory import get_llm
 llm = get_llm()                              # 使用环境变量配置
 llm = get_llm(provider="openai")             # 指定提供商
 llm = get_llm(provider="qwen", model="qwen-max")  # 指定模型
+```
+
+### embedding_factory.py
+统一的嵌入模型兼容层，支持一行代码切换不同提供商：
+```python
+from embedding_factory import get_embeddings
+
+embeddings = get_embeddings()                              # 使用环境变量配置
+embeddings = get_embeddings(provider="openai")             # 指定提供商
+embeddings = get_embeddings(provider="dashscope", model="text-embedding-v2")  # 指定模型
 ```
 
 ### prompt_manager.py
