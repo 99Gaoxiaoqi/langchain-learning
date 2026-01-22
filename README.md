@@ -26,6 +26,8 @@ uv run python 01_basic_chat.py
 uv run python 02_prompt_templates.py
 uv run python 03_output_parsers.py
 uv run python 04_chains.py
+uv run python 05_memory.py
+uv run python 06_tools.py
 ```
 
 ## 项目结构
@@ -92,7 +94,23 @@ uv run python 04_chains.py
   - `trim_messages`：消息裁剪工具
 - 注意：传统 Memory 类不能直接和 LCEL 结合使用
 
-### 第6-8课
+### 第6课：工具 (`06_tools.py`)
+- 工具定义方式：
+  - `@tool` 装饰器：最常用，简单工具
+  - `@tool` + Pydantic：复杂参数验证
+  - `StructuredTool.from_function`：更多控制
+- 工具绑定：`llm.bind_tools()` / `tool_choice` 强制选择
+- 三种工具调用方式：
+  - 手动循环：完全控制，适合简单场景
+  - `create_tool_calling_agent`：官方推荐，自动处理循环
+  - LangGraph：生产环境推荐（第8课详解）
+- 高级技巧：
+  - 并行工具执行（asyncio.gather）
+  - 错误处理（在工具内部处理）
+  - 异步工具（async def）
+  - 访问运行时配置（RunnableConfig）
+
+### 第7-8课
 待完成...
 
 ## 企业级组件
